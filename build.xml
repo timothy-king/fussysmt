@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<project name="FussySMT" default="all" basedir=".">
+  <property name="src" value="src"/>
+  <property name="build" value="build"/>
+
+  <target name="initialize">
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="all" depends="initialize">
+    <javac debug="true" srcdir="${src}" destdir="${build}" includeantruntime="false"/>
+    <jar destfile="fussysmt.jar" basedir="${build}">
+    </jar>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete file="fussysmt.jar"/>
+  </target>
+  
+</project>
