@@ -12,7 +12,7 @@ public class QuantifierTerm extends AbstractTerm {
   
   public QuantifierTerm(QuantifierKind qk, List<QuantifierBinding> boundVars, Term term){
     super(TermKind.QUANTIFIER, term.getSort());
-    assert(term.getSort().equals(BoolSort.boolSort));
+    assert(BoolSortConstructor.isBoolSort(term.getSort()));
     this.quantKind = qk;
     this.boundVars=boundVars;
     this.term=term;

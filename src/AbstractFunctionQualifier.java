@@ -16,6 +16,7 @@ public abstract class AbstractFunctionQualifier extends AbstractQualifier implem
   public abstract List<Integer> getNumericIdentifiers();
   public abstract List<Sort> getSortParameters();
 
+  public int getArity() { return arity; }
   public Symbol getSymbol() { return sym; }
 
   public boolean equals(Object o){

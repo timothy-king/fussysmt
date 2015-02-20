@@ -40,8 +40,14 @@ public abstract class AbstractSort implements Sort {
 
   /* No need to overload. */
   public String toString(){
-    SexprStringStream ss = new SexprStringStream();
-    writeSexpr(ss);
-    return ss.toString();
+    if(sq.isConstant()){
+      return sq.getSymbol().symbol();
+    } else {
+      SexprStringStream ss = new SexprStringStream();
+      writeSexpr(ss);
+      return ss.toString();
+    }
   }
+
+  public abstract int hashCode();
 }

@@ -9,6 +9,10 @@ public class StringSymbol implements Symbol {
 
   public String symbol(){ return sym; }
 
+  public int hashCode(){
+    return sym.hashCode();
+  }
+  
   public static boolean isSymbol(String s){
     return isBasicSymbol(s) && isQualifiedSymbol(s);
   }

@@ -1,10 +1,24 @@
 package fussysmt;
 
 public abstract class ConstantSortConstructor implements SortConstructor {
-  
-  public abstract Sort produce(SortQualifier sq);
+  protected final Symbol sym;
+  protected final ConstantSortQualifier qualifier;
+
+  protected ConstantSortConstructor(Symbol sym){
+    this.sym = sym;
+    this.qualifier = new ConstantSortQualifier(sym);
+  }
   
   public boolean fixedSymbol(){ return true; }
   public int numericIndentifiers() { return 0; }
   public int sortParameters() { return 0; }
+  
+  public Sort produce(SortQualifier sq){
+    assert(sq.equals(qualifier));
+    return produce();
+  }
+
+  public abstract Sort produce();
+
+  public abstract boolean equals(Object o);
 }
