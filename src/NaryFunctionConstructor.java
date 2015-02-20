@@ -12,16 +12,14 @@ public class NaryFunctionConstructor implements FunctionConstructor {
   protected final Sort codomain;
   protected final int minArity;
 
-  private final Map<Integer, Signature> signatures;
-  private final Map<Integer, FunctionQualifier> qualifiers;
+  private final Map<Integer, Function> functions;
   
   public NaryFunctionConstructor(Symbol sym, int minArity, Sort domain){
     this.sym = sym;
     this.domain = domain;
     this.codomain = domain;
     this.minArity = minArity;
-    this.signatures = new HashMap<Integer, Signature>();
-    this.qualifiers = new HashMap<Integer, FunctionQualifier>();
+    this.functions = new HashMap<Integer, Function>();
     assert(minArity >= 0);
   }
 
@@ -31,8 +29,7 @@ public class NaryFunctionConstructor implements FunctionConstructor {
     this.domain = domain;
     this.codomain = codomain;
     this.minArity = minArity;
-    this.signatures = new HashMap<Integer, Signature>();
-    this.qualifiers = new HashMap<Integer, FunctionQualifier>();
+    this.functions = new HashMap<Integer, Function>();
     assert(minArity >= 0);
   }
   
@@ -49,29 +46,24 @@ public class NaryFunctionConstructor implements FunctionConstructor {
   }
 
   public Function produce(int n){
-    return new FunctionImpl(this, naryFunctionQualifier(n), narySignature(n));
+    assert(n >= minArity);
+    if(functions.containsKey(n)){
+      return functions.get(n);
+    } else {
+      Signature sig = SignatureImpl.mkNary(n, domain, codomain);
+      FunctionQualifier fq = new NaryFunctionQualifier(sym, n);
+      Function fun = new FunctionImpl(this, fq, sig);
+      functions.put(n, fun);
+      return fun;
+    }
   }
 
   public FunctionQualifier naryFunctionQualifier(int n){
-    assert(n >= minArity);
-    if(qualifiers.containsKey(n)){
-      return qualifiers.get(n);
-    } else {
-      FunctionQualifier fq = new NaryFunctionQualifier(sym, n);
-      qualifiers.put(n, fq);
-      return fq;
-    }
+    return produce(n).producedBy();
   }
   
   public Signature narySignature(int n){
-    assert(n >= minArity);
-    if(signatures.containsKey(n)){
-      return signatures.get(n);
-    } else {
-      Signature sig = SignatureImpl.mkNary(n, domain, codomain);
-      signatures.put(n, sig);
-      return sig;
-    }
+    return produce(n).getSignature();
   }
   
   public boolean equals(Object o){

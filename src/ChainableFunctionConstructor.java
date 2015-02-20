@@ -14,27 +14,8 @@ public abstract class ChainableFunctionConstructor implements FunctionConstructo
   protected final Sort codomain;
   protected final int minArity;
 
-  private class SortIntPair {
-    int n;
-    Sort s;
-    SortIntPair(int n, Sort s){
-      this.n = n;
-      this.s = s;
-    }
-    
-    public boolean equals(Object o){
-      if(o == this){
-        return true;
-      } else if(o == null || !(o instanceof SortIntPair)){
-        return false;
-      } else{
-        SortIntPair sip = (SortIntPair) o;
-        return n == sip.n && s.equals(sip.s);
-      }
-    }
-    public int hashCode(){
-      return HashUtils.hash(s, n);
-    }
+  private class SortIntPair extends HashUtils.KeyPair<Sort, Integer> {
+    SortIntPair(Sort s, Integer i) { super(s,i); }
   }
   
   private final Map<SortIntPair, Signature> signatures;
@@ -73,7 +54,7 @@ public abstract class ChainableFunctionConstructor implements FunctionConstructo
 
   public FunctionQualifier naryFunctionQualifier(int n, Sort s){
     assert(n >= minArity);
-    SortIntPair key = new SortIntPair(n,s);
+    SortIntPair key = new SortIntPair(s,n);
     if(qualifiers.containsKey(key)){
       return qualifiers.get(key);
     } else {
@@ -85,7 +66,7 @@ public abstract class ChainableFunctionConstructor implements FunctionConstructo
   
   public Signature narySignature(int n, Sort s){
     assert(n >= minArity);
-    SortIntPair key = new SortIntPair(n,s);
+    SortIntPair key = new SortIntPair(s,n);
     if(signatures.containsKey(key)){
       return signatures.get(key);
     } else {

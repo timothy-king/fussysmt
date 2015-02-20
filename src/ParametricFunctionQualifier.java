@@ -9,11 +9,13 @@ class ParametricFunctionQualifier extends AbstractFunctionQualifier {
     super(sym, arity);
     this.params = Arrays.asList(params);
   }
-    
+
+  @Override
   public List<Sort> getSortParameters(){
     return params;
   }
 
+  @Override
   public List<Integer> getNumericIdentifiers(){
     return AbstractQualifier.emptyNumericIdentifiers;
   }

@@ -16,5 +16,6 @@ public interface Qualifier{
   /* !isParameteric() && !hasNumericIdentifiers */
   public boolean isConstant();
 
+  @Override
   public boolean equals(Object o);
 }

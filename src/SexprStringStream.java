@@ -68,4 +68,14 @@ public class SexprStringStream implements SexprStream {
     close();
   }
 
+  public static String createClosed(Symbol symbol, Sexpr... sexprs){
+    SexprStringStream ss = new SexprStringStream();
+    ss.open();
+    ss.append(symbol);
+    for(Sexpr expr : sexprs){
+      ss.append(expr);
+    }
+    ss.close();
+    return ss.toString();
+  }
 }
