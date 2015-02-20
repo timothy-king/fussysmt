@@ -9,7 +9,10 @@
   </target>
 
   <target name="all" depends="initialize">
-    <javac debug="true" srcdir="${src}" destdir="${build}" includeantruntime="false"/>
+    <javac debug="true" srcdir="${src}" destdir="${build}" includeantruntime="false">
+      <compilerarg value="-Xlint:all"/>
+      <compilerarg value="-Werror"/>
+    </javac>
     <jar destfile="fussysmt.jar" basedir="${build}">
     </jar>
   </target>
