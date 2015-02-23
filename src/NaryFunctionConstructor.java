@@ -39,7 +39,7 @@ public class NaryFunctionConstructor implements FunctionConstructor {
   public int numericIndentifiers() { return 0; }
   public int sortParameters() { return 0; }
   
-  public Function produce(FunctionQualifier fq){
+  public Function produce(Qualifier fq){
     int arity = fq.getArity();
     assert(naryFunctionQualifier(arity).equals(fq));
     return produce(arity);
@@ -51,14 +51,14 @@ public class NaryFunctionConstructor implements FunctionConstructor {
       return functions.get(n);
     } else {
       Signature sig = SignatureImpl.mkNary(n, domain, codomain);
-      FunctionQualifier fq = new NaryFunctionQualifier(sym, n);
+      Qualifier fq = FullQualifier.mkQualifier(sym, n);
       Function fun = new FunctionImpl(this, fq, sig);
       functions.put(n, fun);
       return fun;
     }
   }
 
-  public FunctionQualifier naryFunctionQualifier(int n){
+  public Qualifier naryFunctionQualifier(int n){
     return produce(n).producedBy();
   }
   

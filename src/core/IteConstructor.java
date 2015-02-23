@@ -25,7 +25,7 @@ public class IteConstructor implements FunctionConstructor {
   public int numericIndentifiers() { return 0; }
   public int sortParameters() { return 1; }
   
-  public Function produce(FunctionQualifier fq){
+  public Function produce(Qualifier fq){
     assert(fq.isParameteric());
     List<Sort> params = fq.getSortParameters();
     assert(params.size() == 1);
@@ -40,7 +40,7 @@ public class IteConstructor implements FunctionConstructor {
       return functions.get(s);
     } else {
       Signature sig = new SignatureImpl(Arrays.asList(boolSort, s, s), s);
-      FunctionQualifier fq = new ParametricFunctionQualifier(sym, 3, s);
+      Qualifier fq = FullQualifier.mkSortQualifier(sym, 3, s);
       Function fun = new FunctionImpl(this, fq, sig);
       functions.put(s, fun);
       return fun;
@@ -48,7 +48,7 @@ public class IteConstructor implements FunctionConstructor {
   }
 
   
-  public FunctionQualifier getIteFunctionQualifier(Sort s){
+  public Qualifier getIteFunctionQualifier(Sort s){
     return produce(s).producedBy();
   }
   

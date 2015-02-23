@@ -2,7 +2,7 @@ package fussysmt;
 
 public final class RealSortConstructor extends ConstantSortConstructor {
   private final class RealSort extends AbstractSort {
-    RealSort(SortQualifier sq, SortConstructor sc){
+    RealSort(Qualifier sq, SortConstructor sc){
       super(sq,sc);
     }
     @Override
@@ -21,7 +21,7 @@ public final class RealSortConstructor extends ConstantSortConstructor {
 
   @Override
   public Sort produce(){
-    return new RealSort(qualifier, this);
+    return new RealSort(getConstantQualifier(), this);
   }
 
   @Override

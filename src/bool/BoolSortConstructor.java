@@ -7,7 +7,7 @@ public class BoolSortConstructor extends ConstantSortConstructor {
   public static final Sort boolSort = boolSortConstructor.produce();
   
   private class BoolSort extends AbstractSort {
-    BoolSort(SortQualifier sq, SortConstructor sc){
+    BoolSort(Qualifier sq, SortConstructor sc){
       super(sq,sc);
     }
     public boolean equals(Object o){

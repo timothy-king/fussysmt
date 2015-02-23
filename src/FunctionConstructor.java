@@ -1,9 +1,9 @@
 package fussysmt;
 
-public interface FunctionConstructor extends Rule<FunctionQualifier, Function> {
+public interface FunctionConstructor extends Rule<Qualifier, Function> {
 
   /* symbol * (arity N) * [int] numeric identifiers * [sorts] */
-  public Function produce(FunctionQualifier fq);
+  public Function produce(Qualifier fq);
 
   /** Returns true if the FunctionConstructor takes only one symbol.*/
   public boolean fixedSymbol();

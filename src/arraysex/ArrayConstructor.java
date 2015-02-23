@@ -24,7 +24,7 @@ public class ArrayConstructor implements SortConstructor {
   public int numericIndentifiers() { return 0; }
   public int sortParameters() { return 2; }
 
-  public Sort produce(SortQualifier sq){
+  public Sort produce(Qualifier sq){
     assert(sq.isParameteric());
     List<Sort> params = sq.getSortParameters();
     assert(params.size() == 2);
@@ -32,7 +32,7 @@ public class ArrayConstructor implements SortConstructor {
     return getArraySort(params.get(0), params.get(1));
   }
 
-  public SortQualifier getArraySortQualifier(Sort index, Sort value){
+  public Qualifier getArraySortQualifier(Sort index, Sort value){
     return getArraySort(index, value).producedBy();
   }
   
@@ -41,7 +41,7 @@ public class ArrayConstructor implements SortConstructor {
     if(arraySorts.containsKey(iv)){
       return arraySorts.get(iv);
     } else{
-      SortQualifier sq = new ParametricSortQualifier(arraySymbol, index, value);
+      Qualifier sq = FullQualifier.mkConstantSortQualifier(arraySymbol, index, value);
       ArraySort as = new ArraySort(sq, this);
       arraySorts.put(iv, as);
       return as;

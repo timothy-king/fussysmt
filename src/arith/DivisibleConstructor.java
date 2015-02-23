@@ -32,7 +32,7 @@ public final class DivisibleConstructor implements FunctionConstructor {
   }
   
   @Override
-  public Function produce(FunctionQualifier fq){
+  public Function produce(Qualifier fq){
     assert(fq.hasNumericIdentifiers());
     List<Integer> num_ids = fq.getNumericIdentifiers();
     assert(num_ids.size() == 1);
@@ -45,7 +45,7 @@ public final class DivisibleConstructor implements FunctionConstructor {
     if(divisibleFunctions.containsKey(n)){
       return divisibleFunctions.get(n);
     } else {
-      FunctionQualifier fq = new IndentifiedFunctionQualifier(sym, 1, n);
+      Qualifier fq = FullQualifier.mkNumeralQualifier(sym, 1, n);
       Function fun = new FunctionImpl(this, fq, int2Bool);
       divisibleFunctions.put(n, fun);
       return fun;
@@ -53,7 +53,7 @@ public final class DivisibleConstructor implements FunctionConstructor {
   }
 
   
-  public FunctionQualifier getDivisibleQualifier(int n){
+  public Qualifier getDivisibleQualifier(int n){
     return produce(n).producedBy();
   }
   

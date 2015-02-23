@@ -45,7 +45,7 @@ public final class DecimalFunctionConstructor implements FunctionConstructor {
   }
   
   /* symbol * (arity N) * [int] numeric identifiers * [sorts] */
-  public Function produce(FunctionQualifier fq){
+  public Function produce(Qualifier fq){
     assert(fq.isConstant());
     assert(isDecimal(fq.getSymbol()));
     assert(getDecimalQualifier(fq.getSymbol()).equals(fq));
@@ -57,7 +57,7 @@ public final class DecimalFunctionConstructor implements FunctionConstructor {
       return decimals.get(key.symbol());
     } else {
       assert(isDecimal(key));
-      FunctionQualifier fq = new ConstantFunctionQualifier(key);
+      Qualifier fq = FullQualifier.mkConstantFixedQualifier(key);
       Function fun = new FunctionImpl(this, fq, arithSig);
       decimals.put(key.symbol(), fun);
       return fun;
@@ -68,10 +68,10 @@ public final class DecimalFunctionConstructor implements FunctionConstructor {
     return produce(new StringSymbol(key.toString()));
   }
   
-  public FunctionQualifier getDecimalQualifier(Symbol s){
+  public Qualifier getDecimalQualifier(Symbol s){
     return produce(s).producedBy();
   }
-  public FunctionQualifier getDecimalQualifier(Integer i){
+  public Qualifier getDecimalQualifier(Integer i){
     return produce(i).producedBy();
   }
   

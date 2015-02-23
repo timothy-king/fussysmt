@@ -1,8 +1,7 @@
 package fussysmt;
 
 import java.util.List;
-public class ConstantSortQualifier extends AbstractQualifier implements SortQualifier {
-
+public class ConstantSortQualifier extends AbstractQualifier {
   protected Symbol sym;
 
   public ConstantSortQualifier(Symbol sym){
@@ -18,4 +17,6 @@ public class ConstantSortQualifier extends AbstractQualifier implements SortQual
   public List<Sort> getSortParameters(){
     return AbstractQualifier.emptySortParameters;
   }
+
+  public int getArity(){ return 0; }
 }

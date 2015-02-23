@@ -1,7 +1,7 @@
 package fussysmt;
 
-public interface SortConstructor extends Rule<SortQualifier, Sort> {
-  public Sort produce(SortQualifier sq);
+public interface SortConstructor extends Rule<Qualifier, Sort> {
+  public Sort produce(Qualifier sq);
 
   /** Returns true if the SortConstructor produces only one symbol.*/
   public boolean fixedSymbol();

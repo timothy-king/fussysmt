@@ -18,7 +18,7 @@ public final class StoreConstructor extends ParametricFixedFunctionConstructor {
     assert(s != null);
     assert(s instanceof ArraySort);
     ArraySort as = (ArraySort) s;
-    FunctionQualifier sfq = getFunctionQualifier(as);
+    Qualifier sfq = getFunctionQualifier(as);
     List<Sort> domain = Arrays.asList(as, as.indexSort(), as.valueSort());
     Signature sig = new SignatureImpl(domain, as);
     return new FunctionImpl(this, sfq, sig);

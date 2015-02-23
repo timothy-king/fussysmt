@@ -1,7 +1,7 @@
 package fussysmt;
 
 public class ArraySort extends AbstractSort {
-  ArraySort(SortQualifier sq, SortConstructor sc){
+  ArraySort(Qualifier sq, SortConstructor sc){
     super(sq,sc);
     assert(sq.isParameteric());
     assert(sq.getSortParameters().size() == 2);
@@ -27,6 +27,7 @@ public class ArraySort extends AbstractSort {
     assert(sq.getSortParameters().size() == 2);
     return sq.getSortParameters().get(1);
   }
+  
   public int hashCode(){
     return HashUtils.hash(producedBy().getSymbol(), indexSort(), valueSort());
   }

@@ -19,7 +19,7 @@ public final class SelectConstructor extends ParametricFixedFunctionConstructor 
     assert(s != null);
     assert(s instanceof ArraySort);
     ArraySort as = (ArraySort) s;
-    FunctionQualifier sfq = getFunctionQualifier(as);
+    Qualifier sfq = getFunctionQualifier(as);
     Signature sig = new SignatureImpl(Arrays.asList(as, as.indexSort()), as.valueSort());
     return new FunctionImpl(this, sfq, sig);
   }

@@ -17,16 +17,13 @@ public abstract class ChainableFunctionConstructor implements FunctionConstructo
   private class SortIntPair extends HashUtils.KeyPair<Sort, Integer> {
     SortIntPair(Sort s, Integer i) { super(s,i); }
   }
-  
-  private final Map<SortIntPair, Signature> signatures;
-  private final Map<SortIntPair, FunctionQualifier> qualifiers;
-  
+  private final Map<SortIntPair, Function> functions;
+
   public ChainableFunctionConstructor(Symbol sym, int minArity, Sort codomain){
     this.sym = sym;
     this.codomain = codomain;
     this.minArity = minArity;
-    this.signatures = new HashMap<SortIntPair, Signature>();
-    this.qualifiers = new HashMap<SortIntPair, FunctionQualifier>();
+    this.functions = new HashMap<SortIntPair, Function>();
     assert(minArity >= 0);
   }
   
@@ -36,7 +33,7 @@ public abstract class ChainableFunctionConstructor implements FunctionConstructo
   public int numericIndentifiers() { return 0; }
   public int sortParameters() { return 1; }
   
-  public Function produce(FunctionQualifier fq){
+  public Function produce(Qualifier fq){
     assert(fq.isParameteric());
     List<Sort> params = fq.getSortParameters();
     assert(params.size() == 1);
@@ -49,31 +46,25 @@ public abstract class ChainableFunctionConstructor implements FunctionConstructo
 
   
   public Function produce(int n, Sort s){
-    return new FunctionImpl(this, naryFunctionQualifier(n, s), narySignature(n, s));
+    assert(n >= minArity);    
+    SortIntPair key = new SortIntPair(s,n);
+    if(functions.containsKey(key)){
+      return functions.get(key);
+    } else {
+      Qualifier fq = FullQualifier.mkSortQualifier(sym, n, s);
+      Signature sig = SignatureImpl.mkNary(n, s, codomain);
+      Function fun = new FunctionImpl(this, fq, sig);
+      functions.put(key, fun);
+      return fun;
+    }
   }
 
-  public FunctionQualifier naryFunctionQualifier(int n, Sort s){
-    assert(n >= minArity);
-    SortIntPair key = new SortIntPair(s,n);
-    if(qualifiers.containsKey(key)){
-      return qualifiers.get(key);
-    } else {
-      FunctionQualifier fq = new ParametricFunctionQualifier(sym, n, s);
-      qualifiers.put(key, fq);
-      return fq;
-    }
+  public Qualifier naryFunctionQualifier(int n, Sort s){
+    return produce(n,s).producedBy();
   }
   
   public Signature narySignature(int n, Sort s){
-    assert(n >= minArity);
-    SortIntPair key = new SortIntPair(s,n);
-    if(signatures.containsKey(key)){
-      return signatures.get(key);
-    } else {
-      Signature sig = SignatureImpl.mkNary(n, s, codomain);
-      signatures.put(key, sig);
-      return sig;
-    }
+    return produce(n,s).getSignature();
   }
   
   public abstract boolean equals(Object o);

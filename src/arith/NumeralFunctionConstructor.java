@@ -38,7 +38,7 @@ public final class NumeralFunctionConstructor implements FunctionConstructor {
   }
   
   /* symbol * (arity N) * [int] numeric identifiers * [sorts] */
-  public Function produce(FunctionQualifier fq){
+  public Function produce(Qualifier fq){
     assert(fq.isConstant());
     assert(isNumeral(fq.getSymbol()));
     assert(getNumeralQualifier(fq.getSymbol()).equals(fq));
@@ -50,7 +50,7 @@ public final class NumeralFunctionConstructor implements FunctionConstructor {
     if(numerals.containsKey(key.symbol())){
       return numerals.get(key.symbol());
     } else {
-      FunctionQualifier fq = new ConstantFunctionQualifier(key);
+      Qualifier fq = FullQualifier.mkConstantFixedQualifier(key);
       Function fun = new FunctionImpl(this, fq, arithSig);
       numerals.put(key.symbol(), fun);
       return fun;
@@ -61,10 +61,10 @@ public final class NumeralFunctionConstructor implements FunctionConstructor {
     return produce(new StringSymbol(key.toString()));
   }
 
-  public FunctionQualifier getNumeralQualifier(Symbol s){
+  public Qualifier getNumeralQualifier(Symbol s){
     return produce(s).producedBy();
   }
-  public FunctionQualifier getNumeralQualifier(Integer i){
+  public Qualifier getNumeralQualifier(Integer i){
     return produce(i).producedBy();
   }
   

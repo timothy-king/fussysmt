@@ -110,12 +110,6 @@ public final class ArithTheory {
     //    )
       
   }
-  
-  private void addIntegerSort(){
-  }
-  private void addRealSort(){
-    sortConstructors.add(new RealSortConstructor());
-  }
 
   static List<FunctionConstructor> addSharedFunctions(Sort arithSort, Sort boolSort){
     Signature arith2Arith = SignatureImpl.mkUnary(arithSort, arithSort);

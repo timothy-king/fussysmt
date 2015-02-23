@@ -8,12 +8,15 @@ public abstract class ConstantSortConstructor implements SortConstructor {
     this.sym = sym;
     this.qualifier = new ConstantSortQualifier(sym);
   }
+  protected Qualifier getConstantQualifier(){
+    return qualifier;
+  }
   
   public boolean fixedSymbol(){ return true; }
   public int numericIndentifiers() { return 0; }
   public int sortParameters() { return 0; }
   
-  public Sort produce(SortQualifier sq){
+  public Sort produce(Qualifier sq){
     assert(sq.equals(qualifier));
     return produce();
   }

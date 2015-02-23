@@ -2,7 +2,7 @@ package fussysmt;
 
 public final class IntSortConstructor extends ConstantSortConstructor {
   private final class IntSort extends AbstractSort {
-    IntSort(SortQualifier sq, SortConstructor sc){
+    IntSort(Qualifier sq, SortConstructor sc){
       super(sq,sc);
     }
     @Override
@@ -21,7 +21,7 @@ public final class IntSortConstructor extends ConstantSortConstructor {
 
   @Override
   public Sort produce(){
-    return new IntSort(qualifier, this);
+    return new IntSort(getConstantQualifier(), this);
   }
 
   @Override

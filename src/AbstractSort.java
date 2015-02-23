@@ -1,7 +1,7 @@
 package fussysmt;
 
 public abstract class AbstractSort implements Sort {
-  protected final SortQualifier sq;
+  protected final Qualifier sq;
   protected final SortConstructor sc;
 
   // For now the sort must be either: constant, numeric or parameteric
@@ -11,14 +11,14 @@ public abstract class AbstractSort implements Sort {
       ( !sq.isParameteric() || !sq.hasNumericIdentifiers() );
   }
   
-  protected AbstractSort(SortQualifier sq, SortConstructor sc){
+  protected AbstractSort(Qualifier sq, SortConstructor sc){
     this.sq = sq;
     this.sc = sc;
-
+    assert( sq.getArity() == 0 ); //Sorts always have arity 0
     assert( constantNumericOrParametric());
   }
 
-  public SortQualifier producedBy(){ return sq; }
+  public Qualifier producedBy(){ return sq; }
   public SortConstructor producer(){ return sc; }
 
   public abstract boolean equals(Object o);

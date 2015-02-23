@@ -6,64 +6,58 @@ import java.util.Iterator;
 /* Functions are *always* monomorphic. */
 public class FunctionImpl implements Function{
   protected final FunctionConstructor fc;
-  protected final FunctionQualifier fq;
+  protected final Qualifier fq;
   protected final Signature sig;
   protected final Symbol qualifiedSymbol;
   
-  public FunctionImpl(FunctionConstructor fc, FunctionQualifier fq, Signature sig){
+  public FunctionImpl(FunctionConstructor fc, Qualifier fq, Signature sig){
     assert(fc != null);
     assert(fq != null);
     assert(sig != null);
+    
+    assert(fq.getArity() == sig.getArity());
     this.fc = fc;
     this.fq = fq;
     this.sig = sig;
     this.qualifiedSymbol = fq.getQualifiedSymbol();
   }
-  
-  public FunctionQualifier producedBy(){ return fq; }
-  public FunctionConstructor producer() { return fc; }
+
 
   /* Functions do not own symbols. The qualifier always owns the symbol. */
   public Symbol getSymbol(){ return qualifiedSymbol; }
   public Signature getSignature(){ return sig; }
+  
+  @Override
+  public Qualifier producedBy(){ return fq; }
+  @Override
+  public FunctionConstructor producer() { return fc; }
 
-  /* Reaches into the signature */
-  public int arity(){
-    return getSignature().arity();
+  @Override
+  public int getArity(){
+    return producedBy().getArity();
   }
   
+  @Override
   public List<Sort> getDomainSorts(){
     return getSignature().getDomainSorts();
   }
-
+  
+  @Override
   public Sort getDomainSort(int i){
     return getSignature().getDomainSort(i);
   }
   
+  @Override
   public Sort getCodomainSort(){
     return getSignature().getCodomainSort();     
   }
 
+  @Override
   public boolean canApply(List<Term> args){
-    List<Sort> sorts = getDomainSorts();
-    
-    if(args.size() != sorts.size()){
-      return false;
-    } else {
-      Iterator<Term> term_iter = args.iterator();
-      Iterator<Sort> sort_iter = sorts.iterator();
-
-      while(term_iter.hasNext() ){
-        Term t = term_iter.next();
-        Sort s = sort_iter.next();
-        if(!s.equals(t.getSort())){
-          return false;
-        }
-      }
-      return true;
-    }
+    return getSignature().canApply(args);     
   }
-
+  
+  @Override
   public boolean equals(Object o){
     if(o == this){
       return true;

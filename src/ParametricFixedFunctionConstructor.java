@@ -26,7 +26,7 @@ public abstract class ParametricFixedFunctionConstructor implements FunctionCons
   @Override
   public abstract boolean equals(Object o);
   
-  public Function produce(FunctionQualifier fq){
+  public Function produce(Qualifier fq){
     assert(fq.isParameteric());
     List<Sort> params = fq.getSortParameters();
     assert(params.size() == sortParameters());
@@ -49,8 +49,8 @@ public abstract class ParametricFixedFunctionConstructor implements FunctionCons
   protected abstract Function mkFunction(Sort s);
   
   
-  public FunctionQualifier getFunctionQualifier(Sort s){
-    return new ParametricFunctionQualifier(functionSymbol, minArity(), s);
+  public Qualifier getFunctionQualifier(Sort s){
+    return FullQualifier.mkSortQualifier(functionSymbol, minArity(), s);
   }
   
   /** Returns true if the FunctionConstructor produces only one symbol.*/
